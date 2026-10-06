@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Younes Hoseini — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#fff; --text:#1c1c1c; --muted:#6b6b6b;
+    --line:#e6e6e6; --shadow:0 10px 30px rgba(0,0,0,.06);
+    --radius:18px; --font:'Inter',system-ui,sans-serif;
+    --display:'Playfair Display',serif;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1115; --card:#171a21; --text:#eaeaea; --muted:#9aa0aa;
+    --line:#262b34; --shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);
+       line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .container{max-width:960px;margin:0 auto;padding:0 24px}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+      background:color-mix(in srgb, var(--bg) 80%, transparent);
+      border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;
+             padding:14px 24px;max-width:960px;margin:0 auto}
+  .brand{font-family:var(--display);font-weight:700;font-size:1.05rem;
+         letter-spacing:.3px;cursor:pointer;user-select:none}
+  .nav-links{display:flex;gap:22px;font-size:.9rem}
+  .nav-links a{color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .theme-btn{background:none;border:1px solid var(--line);color:var(--text);
+             padding:6px 12px;border-radius:999px;cursor:pointer;font-size:.85rem;
+             transition:all .2s}
+  .theme-btn:hover{background:var(--card)}
+  @media(max-width:640px){.nav-links{display:none}}
+
+  header.hero{padding:90px 0 70px;text-align:center;
+    background:radial-gradient(600px 300px at 50% -50px, rgba(99,102,241,.12), transparent 70%)}
+  .hero h1{font-family:var(--display);font-size:clamp(2rem,5vw,3.2rem);
+           line-height:1.15;margin-bottom:14px}
+  .hero p.tagline{color:var(--muted);font-size:1.05rem;max-width:620px;margin:0 auto 26px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+  .chip{font-size:.82rem;padding:6px 14px;border-radius:999px;
+        background:var(--card);border:1px solid var(--line);color:var(--muted)}
+  .chip.highlight{background:linear-gradient(135deg,#f59e0b,#f97316);
+    color:#fff;border:none;font-weight:600;box-shadow:0 6px 18px rgba(245,158,11,.35);
+    transform:scale(1.08)}
+  .contact-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:.9rem}
+  .contact-row a{display:inline-flex;align-items:center;gap:8px;
+    padding:10px 18px;border-radius:999px;background:var(--card);
+    border:1px solid var(--line);transition:transform .2s,box-shadow .2s}
+  .contact-row a:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+
+  section{padding:64px 0;scroll-margin-top:70px}
+  .section-head{margin-bottom:34px}
+  .section-eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);display:inline-block;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  .section-head h2{font-family:var(--display);font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:6px}
+  .section-head p{color:var(--muted);max-width:600px}
+
+  .theme-blue  {--accent:#3b82f6;--accent-soft:rgba(59,130,246,.10)}
+  .theme-green {--accent:#10b981;--accent-soft:rgba(16,185,129,.10)}
+  .theme-orange{--accent:#f59e0b;--accent-soft:rgba(245,158,11,.10)}
+  .theme-purple{--accent:#8b5cf6;--accent-soft:rgba(139,92,246,.10)}
+  .theme-teal  {--accent:#14b8a6;--accent-soft:rgba(20,184,166,.10)}
+  .theme-pink  {--accent:#ec4899;--accent-soft:rgba(236,72,153,.10)}
+
+  section[class*="theme-"]{background:linear-gradient(180deg,var(--accent-soft) 0%, transparent 100%);
+    border-top:1px solid var(--line)}
+  section[class*="theme-"] .section-eyebrow{color:var(--accent);background:var(--accent-soft)}
+
+  .timeline{display:flex;flex-direction:column;gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);
+    border-left:4px solid var(--accent,var(--line));border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+  .card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.10)}
+  .card .meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;
+    font-size:.8rem;color:var(--muted);margin-bottom:6px}
+  .card .meta .date{font-weight:600;color:var(--accent,var(--muted))}
+  .card h3{font-size:1.08rem;font-weight:600;margin-bottom:2px}
+  .card .sub{font-size:.9rem;color:var(--muted);margin-bottom:10px}
+  .card p{font-size:.94rem;color:var(--muted)}
+
+  .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .skill-card{background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .skill-card h4{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:12px}
+  .skill-card ul{list-style:none;font-size:.93rem;color:var(--muted)}
+  .skill-card li{padding:5px 0;border-bottom:1px dashed var(--line)}
+  .skill-card li:last-child{border-bottom:none}
+  .skill-card li strong{color:var(--text);font-weight:500}
+
+  .qr-box{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+  .qr-box img{width:180px;height:180px;border-radius:14px;
+    border:1px solid var(--line);padding:8px;background:#fff;object-fit:contain}
+  .qr-box small{color:var(--muted);font-size:.8rem}
+
+  .cv-btn{display:inline-flex;align-items:center;gap:10px;
+    padding:14px 26px;border-radius:999px;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;
+    font-weight:600;font-size:.95rem;box-shadow:0 10px 30px rgba(59,130,246,.3);
+    transition:transform .2s,box-shadow .2s;margin-top:20px;cursor:pointer;border:none}
+  .cv-btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(59,130,246,.45)}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);
+    font-size:.85rem;border-top:1px solid var(--line)}
+  footer a{color:var(--text);border-bottom:1px solid var(--line)}
+
+  .reveal{opacity:0;transform:translateY(18px);
+    transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ===== EDIT MODE ===== */
+  .edit-banner{display:none;position:fixed;top:70px;left:50%;
+    transform:translateX(-50%);z-index:100;background:#111;color:#fff;
+    padding:10px 18px;border-radius:999px;font-size:.85rem;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .edit-banner.on{display:flex}
+  .edit-banner button{background:#fff;color:#111;border:none;
+    padding:5px 12px;border-radius:999px;cursor:pointer;font-weight:600;font-size:.8rem;
+    transition:background .2s}
+  .edit-banner button:hover{background:#e5e7eb}
+  body.edit-mode [data-editable]{outline:2px dashed #3b82f6;outline-offset:4px;
+    border-radius:6px;cursor:text;transition:outline .2s}
+  body.edit-mode [data-editable]:focus{outline:2px solid #3b82f6;background:rgba(59,130,246,.08)}
+
+  /* عکس‌های قابل ادیت */
+  body.edit-mode img[data-editable-img]{outline:2px dashed #ec4899;outline-offset:4px;
+    cursor:pointer;transition:outline .2s,transform .2s}
+  body.edit-mode img[data-editable-img]:hover{outline:2px solid #ec4899;
+    transform:scale(1.03)}
+
+  /* دکمه CV قابل ادیت */
+  body.edit-mode [data-editable-file]{outline:2px dashed #ec4899;outline-offset:4px;
+    position:relative}
+
+  /* نشانگر عکس خالی */
+  .img-placeholder{display:flex;align-items:center;justify-content:center;
+    width:180px;height:180px;border:2px dashed var(--line);border-radius:14px;
+    color:var(--muted);font-size:.85rem;text-align:center;padding:20px;background:var(--card)}
+
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+    background:#111;color:#fff;padding:12px 22px;border-radius:999px;
+    font-size:.9rem;z-index:200;transition:transform .3s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* مودال آپلود */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);
+    z-index:300;align-items:center;justify-content:center;padding:20px}
+  .modal.on{display:flex}
+  .modal-box{background:var(--card);border-radius:var(--radius);padding:30px;
+    max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow)}
+  .modal-box h3{margin-bottom:12px;font-size:1.1rem}
+  .modal-box p{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+  .modal-box input[type=file]{display:block;width:100%;margin-bottom:16px;
+    padding:10px;border:1px solid var(--line);border-radius:10px;
+    background:var(--bg);color:var(--text);font-size:.9rem}
+  .modal-box .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .modal-box button{padding:10px 20px;border-radius:999px;border:none;
+    cursor:pointer;font-weight:600;font-size:.9rem}
+  .modal-box .btn-primary{background:#3b82f6;color:#fff}
+  .modal-box .btn-secondary{background:var(--line);color:var(--text)}
+</style>
+</head>
+<body data-theme="light">
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand" id="brandTrigger">Younes Hoseini</div>
+    <div class="nav-links">
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()">🌓 Theme</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <h1 data-editable>Younes Hoseini</h1>
+    <p class="tagline" data-editable>
+      Computer Science student, English instructor, professional basketball player &amp; referee,
+      writer and content creator — based in Istanbul, Türkiye.
+    </p>
+    <div class="chips">
+      <span class="chip highlight" data-editable>🏀 Professional Basketball Player</span>
+      <span class="chip" data-editable>💻 Computer Science</span>
+      <span class="chip" data-editable>🎓 English Teacher</span>
+      <span class="chip" data-editable>✍️ Author</span>
+      <span class="chip" data-editable>🎬 Film Critic</span>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:u.hoseiny85@yahoo.com" data-editable>✉️ u.hoseiny85@yahoo.com</a>
+      <a href="https://wa.me/989032197843" target="_blank">💬 WhatsApp</a>
+      <a href="https://youtube.com/@Harpagussss" target="_blank">▶️ YouTube</a>
+      <a href="tel:+989032197843">📞 +98 903 219 7843</a>
+    </div>
+  </div>
+</header>
+
+<section id="education" class="theme-blue reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Education</span>
+      <h2 data-editable>Academic Background</h2>
+      <p data-editable>Formal studies in computer science and engineering.</p>
+    </div>
+    <div class="timeline">
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2026 — ongoing</span><span data-editable>Fenerbahçe University</span></div>
+        <h3 data-editable>Master's Student — Computer Engineering</h3>
+        <p class="sub" data-editable>Istanbul, Türkiye</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2022 — 2026</span><span data-editable>Islamic Azad University</span></div>
+        <h3 data-editable>B.S. Computer Science</h3>
+        <p class="sub" data-editable>Central Tehran Branch · Tehran, Iran</p>
+        <p data-editable>Final Grade: 15 / 20 · EQF Level 6 · 140 Credits</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="theme-green reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Experience</span>
+      <h2 data-editable>Work &amp; Activities</h2>
+      <p data-editable>Teaching, sports, coaching and creative work.</p>
+    </div>
+    <div class="timeline">
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2015 — Present</span><span data-editable>Tehran, Iran</span></div>
+        <h3 data-editable>Professional Basketball Player</h3>
+        <p data-editable>Long-term commitment to regular training, league matches and official competitions — demonstrating discipline and teamwork.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2024 — 2025</span><span data-editable>IRANMEHR · Tehran, Iran</span></div>
+        <h3 data-editable>English Language Instructor (Children &amp; Teenagers)</h3>
+        <p data-editable>Designed and delivered engaging lessons focused on speaking, listening and basic literacy. Developed strong communication, classroom management and interpersonal skills.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2024 — Present</span><span data-editable>Iran Basketball Federation</span></div>
+        <h3 data-editable>Basketball Referee (Part-time)</h3>
+        <p data-editable>Officiated multiple basketball tournaments on a periodic basis, upholding national regulations.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2023 — Present</span><span data-editable>Tehran, Iran</span></div>
+        <h3 data-editable>Basketball Coach</h3>
+        <p data-editable>Planned training sessions and supported players' technical and tactical development. Gained experience in leadership, teamwork and performance-oriented coaching.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2020 — Present</span><span data-editable>YouTube · @Harpagussss</span></div>
+        <h3 data-editable>Content Creator &amp; Writer — Cinema &amp; Film Studies</h3>
+        <p data-editable>Produce original content on cinema, film analysis and criticism. Conduct in-depth analysis of films, genres, directors and narrative techniques.</p>
+      </article>
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2016 — Present</span><span data-editable>Tehran, Iran</span></div>
+        <h3 data-editable>Author</h3>
+        <p data-editable>Wrote and completed an original crime fiction book — plot development, character design, narrative structure and long-form storytelling.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="theme-purple reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Projects</span>
+      <h2 data-editable>Academic &amp; Creative Work</h2>
+      <p data-editable>Software design and writing projects.</p>
+    </div>
+    <div class="timeline">
+      <article class="card">
+        <div class="meta"><span class="date" data-editable>2023 — 2024</span><span data-editable>Software Design Course</span></div>
+        <h3 data-editable>Film Recommendation Application</h3>
+        <p data-editable>Designed and developed an academic software project inspired by Letterboxd. Implemented pattern-based analysis of user preferences to suggest films based on viewing history, genres and rating behavior.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="theme-teal reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Skills &amp; Certifications</span>
+      <h2 data-editable>What I Bring</h2>
+      <p data-editable>Languages, certifications and professional training.</p>
+    </div>
+    <div class="grid-2">
+      <div class="skill-card">
+        <h4>Languages</h4>
+        <ul>
+          <li data-editable><strong>Persian</strong> — Mother tongue</li>
+          <li data-editable><strong>English</strong> — C1 (TOEFL 85/120)</li>
+          <li data-editable><strong>Turkish</strong> — Conversational</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Certifications</h4>
+        <ul>
+          <li data-editable><strong>Teacher Training Course (TTC)</strong> — IRANMEHR, 2025</li>
+          <li data-editable><strong>Basketball Refereeing Level 3</strong> — I.R. Iran Basketball Federation, 2024</li>
+          <li data-editable><strong>TOEFL</strong> — 85 / 120</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Core Strengths</h4>
+        <ul>
+          <li data-editable>Teaching &amp; classroom management</li>
+          <li data-editable>Leadership &amp; teamwork</li>
+          <li data-editable>Writing &amp; film criticism</li>
+          <li data-editable>Software design &amp; pattern analysis</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Interests</h4>
+        <ul>
+          <li data-editable>Cinema &amp; film studies</li>
+          <li data-editable>Basketball (playing, coaching, refereeing)</li>
+          <li data-editable>Creative writing (crime fiction)</li>
+          <li data-editable>Content creation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="theme-orange reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Contact</span>
+      <h2 data-editable>Let's Connect</h2>
+      <p data-editable>Feel free to reach out for collaboration, teaching or projects.</p>
+    </div>
+    <div class="grid-2">
+      <div class="skill-card">
+        <h4>Email</h4>
+        <ul><li data-editable><a href="mailto:u.hoseiny85@yahoo.com">u.hoseiny85@yahoo.com</a></li></ul>
+      </div>
+      <div class="skill-card">
+        <h4>Phone / WhatsApp</h4>
+        <ul>
+          <li data-editable><a href="tel:+989032197843">+98 903 219 7843</a></li>
+          <li data-editable><a href="https://wa.me/989032197843" target="_blank">Chat on WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>YouTube</h4>
+        <ul><li data-editable><a href="https://youtube.com/@Harpagussss" target="_blank">@Harpagussss</a></li></ul>
+      </div>
+
+      <!-- ✅ QR CODE با آپلود -->
+      <div class="skill-card qr-box">
+        <h4 style="color:var(--accent)">Scan to Connect</h4>
+        <img src="" alt="QR Code" id="qrImage" data-editable-img data-img-key="qr" />
+        <small data-editable>اسکن کن تا راه‌های ارتباطی من رو ببینی</small>
+      </div>
+    </div>
+
+    <!-- ✅ دکمه دانلود CV با آپلود -->
+    <div style="text-align:center">
+      <a class="cv-btn" id="cvDownloadBtn" href="#" download="Younes_Hoseini_CV.pdf"
+         data-editable-file data-file-key="cv">
+        ⬇️ Download Full CV (PDF)
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© <span id="year"></span> Younes Hoseini · 
+      <a href="#" id="cvFooterLink" download="Younes_Hoseini_CV.pdf">Download CV</a>
+    </p>
+  </div>
+</footer>
+
+<div class="edit-banner" id="editBanner">
+  <span>✏️ Edit Mode فعال</span>
+  <button onclick="saveEdits()">💾 Save</button>
+  <button onclick="exportHTML()">📤 Export</button>
+  <button onclick="exitEdit()">✖ خروج</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- مودال آپلود -->
+<div class="modal" id="uploadModal">
+  <div class="modal-box">
+    <h3 id="modalTitle">آپلود فایل</h3>
+    <p id="modalDesc">یه فایل انتخاب کن</p>
+    <input type="file" id="modalFileInput" />
+    <div class="btn-row">
+      <button class="btn-primary" onclick="confirmUpload()">✅ تایید</button>
+      <button class="btn-secondary" onclick="closeModal()">انصراف</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ CONFIG ============ */
+const EDIT_PASSWORD = "younes2026";
+const STORAGE_KEY = "younes_site_edits_v2";
+const STORAGE_FILES_KEY = "younes_site_files_v2";
+
+/* ============ THEME ============ */
+function toggleTheme(){
+  const b=document.body;
+  b.dataset.theme = b.dataset.theme==='dark'?'light':'dark';
+}
+
+/* ============ REVEAL ============ */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting)e.target.classList.add('visible');
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ============ YEAR ============ */
+document.getElementById('year').textContent=new Date().getFullYear();
+
+/* ============ TOAST ============ */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ============ EDIT MODE ============ */
+let clickCount=0, clickTimer=null;
+document.getElementById('brandTrigger').addEventListener('click',()=>{
+  clickCount++;
+  clearTimeout(clickTimer);
+  clickTimer=setTimeout(()=>clickCount=0,600);
+  if(clickCount===3){
+    clickCount=0;
+    const pw=prompt("🔐 رمز Edit Mode را وارد کن:");
+    if(pw===EDIT_PASSWORD){enterEdit();}
+    else if(pw!==null){toast("❌ رمز اشتباه است");}
+  }
+});
+
+function enterEdit(){
+  document.body.classList.add('edit-mode');
+  document.getElementById('editBanner').classList.add('on');
+  document.querySelectorAll('[data-editable]').forEach(el=>{
+    el.setAttribute('contenteditable','true');
+    el.spellcheck=false;
+  });
+  toast("✏️ Edit Mode فعال — روی عکس یا دکمه CV کلیک کن");
+}
+
+function exitEdit(){
+  document.body.classList.remove('edit-mode');
+  document.getElementById('editBanner').classList.remove('on');
+  document.querySelectorAll('[data-editable]').forEach(el=>el.removeAttribute('contenteditable'));
+  toast("خروج از Edit Mode");
+}
+
+function saveEdits(){
+  const data={};
+  document.querySelectorAll('[data-editable]').forEach((el,i)=>{
+    data['el_'+i]=el.innerHTML;
+  });
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+  toast("💾 تغییرات متنی ذخیره شد");
+}
+
+function loadEdits(){
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{
+      const data=JSON.parse(raw);
+      document.querySelectorAll('[data-editable]').forEach((el,i)=>{
+        if(data['el_'+i]!==undefined)el.innerHTML=data['el_'+i];
+      });
+    }catch(e){}
+  }
+  // بارگذاری فایل‌ها (QR + CV)
+  loadFiles();
+}
+
+/* ============ FILE MANAGEMENT ============ */
+function loadFiles(){
+  const raw=localStorage.getItem(STORAGE_FILES_KEY);
+  if(!raw)return;
+  try{
+    const files=JSON.parse(raw);
+    if(files.qr)applyQR(files.qr);
+    if(files.cv)applyCV(files.cv, files.cvName||'Younes_Hoseini_CV.pdf');
+  }catch(e){}
+}
+
+function applyQR(dataUrl){
+  const img=document.getElementById('qrImage');
+  img.src=dataUrl;
+}
+
+function applyCV(dataUrl, fileName){
+  const dl=document.getElementById('cvDownloadBtn');
+  const fl=document.getElementById('cvFooterLink');
+  dl.href=dataUrl;
+  dl.download=fileName;
+  fl.href=dataUrl;
+  fl.download=fileName;
+}
+
+/* ============ MODAL UPLOAD ============ */
+let currentUploadTarget=null;
+const modal=document.getElementById('uploadModal');
+const modalInput=document.getElementById('modalFileInput');
+const modalTitle=document.getElementById('modalTitle');
+const modalDesc=document.getElementById('modalDesc');
+
+function openModal(type){
+  currentUploadTarget=type;
+  modalInput.value='';
+  if(type==='qr'){
+    modalTitle.textContent='📷 آپلود QR Code';
+    modalDesc.textContent='یه عکس انتخاب کن (PNG, JPG)';
+    modalInput.accept='image/*';
+  }else if(type==='cv'){
+    modalTitle.textContent='📄 آپلود فایل CV';
+    modalDesc.textContent='یه فایل PDF انتخاب کن';
+    modalInput.accept='application/pdf';
+  }
+  modal.classList.add('on');
+}
+
+function closeModal(){
+  modal.classList.remove('on');
+  currentUploadTarget=null;
+}
+
+function confirmUpload(){
+  const file=modalInput.files[0];
+  if(!file){toast("⚠️ فایلی انتخاب نشده");return;}
+  if(file.size>4*1024*1024){toast("⚠️ فایل بزرگ‌تر از 4MB است — ممکنه ذخیره نشه");}
+  
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const dataUrl=e.target.result;
+    if(currentUploadTarget==='qr'){
+      applyQR(dataUrl);
+      const files=JSON.parse(localStorage.getItem(STORAGE_FILES_KEY)||'{}');
+      files.qr=dataUrl;
+      localStorage.setItem(STORAGE_FILES_KEY,JSON.stringify(files));
+      toast("✅ QR Code آپلود شد");
+    }else if(currentUploadTarget==='cv'){
+      applyCV(dataUrl,file.name);
+      const files=JSON.parse(localStorage.getItem(STORAGE_FILES_KEY)||'{}');
+      files.cv=dataUrl;
+      files.cvName=file.name;
+      localStorage.setItem(STORAGE_FILES_KEY,JSON.stringify(files));
+      toast("✅ فایل CV آپلود شد");
+    }
+    closeModal();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ============ CLICK HANDLERS (فقط در Edit Mode) ============ */
+document.addEventListener('click',e=>{
+  if(!document.body.classList.contains('edit-mode'))return;
+  
+  // کلیک روی عکس قابل ادیت
+  if(e.target.matches('img[data-editable-img]')){
+    e.preventDefault();
+    openModal('qr');
+    return;
+  }
+  
+  // کلیک روی دکمه CV
+  if(e.target.closest('[data-editable-file]')){
+    e.preventDefault();
+    openModal('cv');
+    return;
+  }
+});
+
+/* ============ EXPORT HTML ============ */
+function exportHTML(){
+  saveEdits();
+  const clone=document.documentElement.cloneNode(true);
+  
+  // پاک کردن حالت‌های edit
+  clone.querySelector('body').classList.remove('edit-mode');
+  const banner=clone.querySelector('#editBanner');
+  if(banner)banner.classList.remove('on');
+  const modalEl=clone.querySelector('#uploadModal');
+  if(modalEl)modalEl.classList.remove('on');
+  
+  // محتوای فعلی را داخل HTML ذخیره می‌کنیم
+  // متن‌ها از قبل در HTML هستند
+  // QR و CV به صورت data URL در صفت‌ها ذخیره می‌شن
+  
+  // ذخیره فایل‌ها به‌صورت داده‌ی درون‌خطی در یک اسکریپت
+  const filesRaw=localStorage.getItem(STORAGE_FILES_KEY)||'{}';
+  const textRaw=localStorage.getItem(STORAGE_KEY)||'{}';
+  
+  // حذف localStorage از نسخه نهایی (تا برای همه یکسان باشه)
+  // و به جاش مقادیر رو مستقیم در HTML قرار بده
+  const script=clone.querySelector('script:last-of-type');
+  // یک اسکریپت جدید اضافه کن قبل از </body>
+  const inlineData=document.createElement('script');
+  inlineData.textContent=`
+    window.__PRELOADED_TEXT__ = ${textRaw};
+    window.__PRELOADED_FILES__ = ${filesRaw};
+  `;
+  clone.querySelector('body').appendChild(inlineData);
+  
+  const html='<!DOCTYPE html>\n'+clone.outerHTML;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='index.html';a.click();
+  URL.revokeObjectURL(url);
+  toast("📤 فایل index.html دانلود شد — دوباره روی Netlify آپلودش کن");
+}
+
+/* ============ PRELOAD ON LOAD ============ */
+window.addEventListener('DOMContentLoaded',()=>{
+  // اگر داده‌های preload وجود داره (نسخه export شده) از اون استفاده کن
+  if(window.__PRELOADED_TEXT__){
+    try{
+      const data=window.__PRELOADED_TEXT__;
+      document.querySelectorAll('[data-editable]').forEach((el,i)=>{
+        if(data['el_'+i]!==undefined)el.innerHTML=data['el_'+i];
+      });
+    }catch(e){}
+  }
+  if(window.__PRELOADED_FILES__){
+    try{
+      const f=window.__PRELOADED_FILES__;
+      if(f.qr)applyQR(f.qr);
+      if(f.cv)applyCV(f.cv,f.cvName||'Younes_Hoseini_CV.pdf');
+    }catch(e){}
+  }
+  loadEdits();
+});
+</script>
+</body>
+</html>
